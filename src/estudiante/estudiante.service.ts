@@ -38,6 +38,22 @@ export class EstudianteService {
   async crearEstudiante(
     estudiante: EstudianteEntity,
   ): Promise<EstudianteEntity> {
+    // se busco la expresion para verificar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(estudiante.correo)) {
+      throw new BusinessLogicException(
+        'El email proporcionado no es válido',
+        BusinessError.PRECONDITION_FAILED,
+      );
+    }
+
+    // Validar que el semestre esté entre 1 y 10
+    if (estudiante.semestre < 1 || estudiante.semestre > 10) {
+      throw new BusinessLogicException(
+        'El semestre debe estar entre 1 y 10',
+        BusinessError.PRECONDITION_FAILED,
+      );
+    }
     return await this.estudianteRepository.save(estudiante);
   }
 
