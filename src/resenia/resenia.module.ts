@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { ReseniaService } from './resenia.service';
 
-@Module({})
+@Module({
+  providers: [ReseniaService]
+})
 export class ReseniaModule {}
