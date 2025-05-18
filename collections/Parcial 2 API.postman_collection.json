@@ -1,0 +1,670 @@
+{
+	"info": {
+		"_postman_id": "b1c92de4-deef-47c6-810c-9a25f8df8704",
+		"name": "Parcial 2 API",
+		"description": "API documentation for all endpoints in the Parcial 2 application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32521362"
+	},
+	"item": [
+		{
+			"name": "Estudiantes",
+			"item": [
+				{
+					"name": "Get Student by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Test for response time\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"// Test for response body properties\r",
+									"pm.test(\"Response body has the required properties\", function () {\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.id).to.exist;\r",
+									"    pm.expect(responseBody.nombre).to.exist;\r",
+									"    pm.expect(responseBody.correo).to.exist;\r",
+									"    pm.expect(responseBody.programa).to.exist;\r",
+									"    pm.expect(responseBody.semestre).to.exist;\r",
+									"    pm.expect(responseBody.actividades).to.be.an('array');\r",
+									"    pm.expect(responseBody.resenias).to.be.an('array');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/estudiante/{{estudianteId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"estudiante",
+								"{{estudianteId}}"
+							]
+						},
+						"description": "Retrieves a student by their ID with all their activities and reviews."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"// Test for response time\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"// Test for response body properties\r",
+									"pm.test(\"Response body has valid properties\", function () {\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody).to.have.property('id');\r",
+									"    pm.expect(responseBody).to.have.property('nombre');\r",
+									"    pm.expect(responseBody).to.have.property('correo');\r",
+									"    pm.expect(responseBody).to.have.property('programa');\r",
+									"    pm.expect(responseBody).to.have.property('semestre');\r",
+									"    pm.expect(responseBody.nombre).to.equal('Juan Pérez');\r",
+									"    pm.expect(responseBody.correo).to.equal('juan.perez@example.com');\r",
+									"    pm.expect(responseBody.programa).to.equal('Ingeniería de Sistemas');\r",
+									"    pm.expect(responseBody.semestre).to.equal(6);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Juan Pérez\",\n    \"correo\": \"juan.perez@example.com\",\n    \"programa\": \"Ingeniería de Sistemas\",\n    \"semestre\": 6\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/estudiante",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"estudiante"
+							]
+						},
+						"description": "Creates a new student. Email must be valid and semester must be between 1 and 10."
+					},
+					"response": []
+				},
+				{
+					"name": "Enroll Student in Activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"// Test for response time\r",
+									"pm.test(\"Response time is less than 5000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(5000);\r",
+									"});\r",
+									"\r",
+									"// Test for response body properties\r",
+									"pm.test(\"Response body has required properties\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.have.property('id');\r",
+									"    pm.expect(response).to.have.property('nombre');\r",
+									"    pm.expect(response).to.have.property('correo');\r",
+									"    pm.expect(response).to.have.property('programa');\r",
+									"    pm.expect(response).to.have.property('semestre');\r",
+									"    pm.expect(response).to.have.property('actividades');\r",
+									"});\r",
+									"\r",
+									"// Test for response body schema\r",
+									"pm.test(\"Response body has the correct schema\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.be.an('object');\r",
+									"    pm.expect(response.id).to.be.a('string');\r",
+									"    pm.expect(response.nombre).to.be.a('string');\r",
+									"    pm.expect(response.correo).to.be.a('string');\r",
+									"    pm.expect(response.programa).to.be.a('string');\r",
+									"    pm.expect(response.semestre).to.be.a('number');\r",
+									"    pm.expect(response.actividades).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"// Test for specific activity properties\r",
+									"pm.test(\"Activity in response body has required properties\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    const activity = response.actividades[0];\r",
+									"    pm.expect(activity).to.have.property('id');\r",
+									"    pm.expect(activity).to.have.property('titulo');\r",
+									"    pm.expect(activity).to.have.property('fecha');\r",
+									"    pm.expect(activity).to.have.property('cupoMaximo');\r",
+									"    pm.expect(activity).to.have.property('estado');\r",
+									"    pm.expect(activity).to.have.property('estudiantes');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/estudiante/{{estudianteId}}/actividad/:actividadId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"estudiante",
+								"{{estudianteId}}",
+								"actividad",
+								":actividadId"
+							],
+							"variable": [
+								{
+									"key": "actividadId",
+									"value": "f1c0a483-273a-43b6-aae1-1e2fd5782ea0",
+									"description": "Id de la actividad creada"
+								}
+							]
+						},
+						"description": "Enrolls an existing student in an existing activity."
+					},
+					"response": []
+				}
+			],
+			"description": "Operations related to students"
+		},
+		{
+			"name": "Actividades",
+			"item": [
+				{
+					"name": "Create Activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"// Test for response time\r",
+									"pm.test(\"Response time is less than 300ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+									"});\r",
+									"const response = pm.response.json();\r",
+									"pm.test(\"Check for the existence of id in the response\", function () {\r",
+									"    pm.expect(response).to.have.property('id');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check for the existence of titulo in the response\", function () {\r",
+									"    pm.expect(response).to.have.property('titulo');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check for the existence of fecha in the response\", function () {\r",
+									"    pm.expect(response).to.have.property('fecha');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check for the existence of cupoMaximo in the response\", function () {\r",
+									"    pm.expect(response).to.have.property('cupoMaximo');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check for the existence of estado in the response\", function () {\r",
+									"    pm.expect(response).to.have.property('estado');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"Taller de programación funcional con JavaScript\",\n    \"fecha\": \"2023-10-20\",\n    \"cupoMaximo\": 1,\n    \"estado\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/actividad",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actividad"
+							]
+						},
+						"description": "Creates a new activity. Title must be at least 15 characters. Status will be set to 0 (open) regardless of the input."
+					},
+					"response": []
+				},
+				{
+					"name": "Change Activity State",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for the response status code\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"// Test for the presence and data type of the response fields\r",
+									"const response = pm.response.json();\r",
+									"pm.test(\"Response has 'id' field and it is a string\", function () {\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"    pm.expect(response.id).to.be.a('string');\r",
+									"});\r",
+									"pm.test(\"Response has 'titulo' field and it is a string\", function () {\r",
+									"    pm.expect(response.titulo).to.exist;\r",
+									"    pm.expect(response.titulo).to.be.a('string');\r",
+									"});\r",
+									"pm.test(\"Response has 'fecha' field and it is a string\", function () {\r",
+									"    pm.expect(response.fecha).to.exist;\r",
+									"    pm.expect(response.fecha).to.be.a('string');\r",
+									"});\r",
+									"pm.test(\"Response has 'cupoMaximo' field and it is a number\", function () {\r",
+									"    pm.expect(response.cupoMaximo).to.exist;\r",
+									"    pm.expect(response.cupoMaximo).to.be.a('number');\r",
+									"});\r",
+									"pm.test(\"Response has 'estado' field and it is a number\", function () {\r",
+									"    pm.expect(response.estado).to.exist;\r",
+									"    pm.expect(response.estado).to.be.a('number');\r",
+									"});\r",
+									"\r",
+									"// Test for the 'estudiantes' array in the response\r",
+									"pm.test(\"Response has 'estudiantes' array and it is not empty\", function () {\r",
+									"    pm.expect(response.estudiantes).to.be.an('array').that.is.not.empty;\r",
+									"});\r",
+									"pm.test(\"Each student in 'estudiantes' has required fields\", function () {\r",
+									"    response.estudiantes.forEach((student) => {\r",
+									"        pm.expect(student.id).to.be.a('string');\r",
+									"        pm.expect(student.nombre).to.be.a('string');\r",
+									"        pm.expect(student.correo).to.be.a('string');\r",
+									"        pm.expect(student.programa).to.be.a('string');\r",
+									"        pm.expect(student.semestre).to.be.a('number');\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actividad/:actividadId/estado/:estado",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actividad",
+								":actividadId",
+								"estado",
+								":estado"
+							],
+							"variable": [
+								{
+									"key": "actividadId",
+									"value": "f1c0a483-273a-43b6-aae1-1e2fd5782ea0",
+									"description": "Id de la actividad llena"
+								},
+								{
+									"key": "estado",
+									"value": "2",
+									"description": "New state (0=open, 1=closed, 2=finished)"
+								}
+							]
+						},
+						"description": "Changes activity state. State 1 (closed) requires 80% occupancy, state 2 (finished) requires 100% occupancy."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Activities by Date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Test for response time\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"// Test for response body properties\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Each activity has an id\", function () {\r",
+									"    response.forEach(activity => {\r",
+									"        pm.expect(activity).to.have.property('id');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each activity has a title\", function () {\r",
+									"    response.forEach(activity => {\r",
+									"        pm.expect(activity).to.have.property('titulo');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each activity has a date\", function () {\r",
+									"    response.forEach(activity => {\r",
+									"        pm.expect(activity).to.have.property('fecha');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each activity has a maximum capacity\", function () {\r",
+									"    response.forEach(activity => {\r",
+									"        pm.expect(activity).to.have.property('cupoMaximo');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each activity has a state\", function () {\r",
+									"    response.forEach(activity => {\r",
+									"        pm.expect(activity).to.have.property('estado');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each activity has a list of students\", function () {\r",
+									"    response.forEach(activity => {\r",
+									"        pm.expect(activity).to.have.property('estudiantes');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each activity has a list of reviews\", function () {\r",
+									"    response.forEach(activity => {\r",
+									"        pm.expect(activity).to.have.property('resenias');\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actividad/fecha/:fecha",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actividad",
+								"fecha",
+								":fecha"
+							],
+							"variable": [
+								{
+									"key": "fecha",
+									"value": "2023-10-20",
+									"description": "Date in YYYY-MM-DD format"
+								}
+							]
+						},
+						"description": "Retrieves all activities scheduled for a specific date."
+					},
+					"response": []
+				}
+			],
+			"description": "Operations related to activities"
+		},
+		{
+			"name": "Reseñas",
+			"item": [
+				{
+					"name": "Create Review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test('Expect the \"id\" property to exist', function () {\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test('Expect the \"calificacion\" property to exist', function () {\r",
+									"    pm.expect(response.calificacion).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test('Expect the \"fecha\" property to exist', function () {\r",
+									"    pm.expect(response.fecha).to.exist;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"calificacion\": 4,\n    \"fecha\": \"2023-10-25\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/resenia",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"resenia"
+							]
+						},
+						"description": "Creates a new review without associating it with a student or activity."
+					},
+					"response": []
+				},
+				{
+					"name": "Add Review to Activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Check for the existence of properties in the response\r",
+									"pm.test('Check for the existence of \"id\" property', function () {\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test('Check for the existence of \"calificacion\" property', function () {\r",
+									"    pm.expect(response.calificacion).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test('Check for the existence of \"fecha\" property', function () {\r",
+									"    pm.expect(response.fecha).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test('Check for the existence of \"estudiante\" property', function () {\r",
+									"    pm.expect(response.estudiante).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test('Check for the existence of \"actividad\" property', function () {\r",
+									"    pm.expect(response.actividad).to.exist;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"calificacion\": 5,\n    \"fecha\": \"2023-10-25\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/resenia/actividad/:actividadId/estudiante/{{estudianteId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"resenia",
+								"actividad",
+								":actividadId",
+								"estudiante",
+								"{{estudianteId}}"
+							],
+							"variable": [
+								{
+									"key": "actividadId",
+									"value": "f1c0a483-273a-43b6-aae1-1e2fd5782ea0",
+									"description": "Id de la actividad con 1 solo cupo creada"
+								}
+							]
+						},
+						"description": "Adds a review to an activity by a student. The student must be enrolled in the activity and the activity must be finished (state=2)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Review by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test('Expect the \"id\" property to exist', function () {\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test('Expect the \"calificacion\" property to exist', function () {\r",
+									"    pm.expect(response.calificacion).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test('Expect the \"fecha\" property to exist', function () {\r",
+									"    pm.expect(response.fecha).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test('Expect the \"estudiante\" property to exist', function () {\r",
+									"    pm.expect(response.estudiante).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test('Expect the \"actividad\" property to exist', function () {\r",
+									"    pm.expect(response.actividad).to.exist;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/resenia/{{reseniaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"resenia",
+								"{{reseniaId}}"
+							]
+						},
+						"description": "Retrieves a review by its ID including related activity and student."
+					},
+					"response": []
+				}
+			],
+			"description": "Operations related to reviews"
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "estudianteId",
+			"value": "aeeae676-1347-4e14-a075-44cdfdc2e99c",
+			"type": "default"
+		},
+		{
+			"key": "actividadId",
+			"value": "79ca67d3-3765-4d6d-80dc-45826ee33898",
+			"type": "default"
+		},
+		{
+			"key": "reseniaId",
+			"value": "3a98505f-58c3-4c79-ab91-2aed160ba34f",
+			"type": "default"
+		}
+	]
+}

@@ -9,7 +9,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ActividadService } from './actividad.service';
-import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors/business-errors.interceptor';
+import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { ActividadDto } from './actividad.dto';
 import { ActividadEntity } from './actividad.entity';
 import { plainToInstance } from 'class-transformer';
@@ -33,7 +33,7 @@ export class ActividadController {
     @Param('actividadId') actividadId: string,
     @Param('estado') estado: string,
   ) {
-    return await this.actividadService.cambiarEstado(actividadId, estado);
+    return await this.actividadService.cambiarEstado(actividadId, +estado);
   }
 
   @Get('fecha/:fecha')

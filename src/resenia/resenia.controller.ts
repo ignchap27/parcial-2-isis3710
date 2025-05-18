@@ -9,7 +9,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ReseniaService } from './resenia.service';
-import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors/business-errors.interceptor';
+import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { ReseniaDto } from './resenia.dto';
 import { ReseniaEntity } from './resenia.entity';
 import { plainToInstance } from 'class-transformer';

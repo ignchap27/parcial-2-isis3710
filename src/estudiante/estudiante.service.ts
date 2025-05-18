@@ -85,10 +85,9 @@ export class EstudianteService {
       );
 
     estudiante.actividades = estudiante.actividades || [];
-    actividad.estudiantes = actividad.estudiantes || [];
 
-    estudiante.actividades = [...estudiante.actividades, actividad];
-    actividad.estudiantes = [...actividad.estudiantes, estudiante];
+    estudiante.actividades.push(actividad);
+
     return await this.estudianteRepository.save(estudiante);
   }
 }

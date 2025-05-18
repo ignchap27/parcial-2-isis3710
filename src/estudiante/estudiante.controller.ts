@@ -9,7 +9,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { EstudianteService } from './estudiante.service';
-import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors/business-errors.interceptor';
+import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { EstudianteDto } from './estudiante.dto';
 import { EstudianteEntity } from './estudiante.entity';
 import { plainToInstance } from 'class-transformer';
