@@ -30,10 +30,10 @@ export class ActividadController {
 
   @Post(':actividadId/estado/:estado')
   async cambiarEstado(
-    @Param('actividadId') actividadId: number,
-    @Param('estado') estado: number,
+    @Param('actividadId') actividadId: string,
+    @Param('estado') estado: string,
   ) {
-    return await this.actividadService.cambiarEstado(+actividadId, +estado);
+    return await this.actividadService.cambiarEstado(actividadId, estado);
   }
 
   @Get('fecha/:fecha')

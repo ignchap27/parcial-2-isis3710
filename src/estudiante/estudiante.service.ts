@@ -5,8 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {
   BusinessError,
   BusinessLogicException,
-} from 'src/shared/errors/business-errors';
-import { ActividadEntity } from 'src/actividad/actividad.entity';
+} from '../shared/errors/business-errors';
+import { ActividadEntity } from '../actividad/actividad.entity';
 
 @Injectable()
 export class EstudianteService {
@@ -18,7 +18,7 @@ export class EstudianteService {
     private readonly actividadRepository: Repository<ActividadEntity>,
   ) {}
 
-  async findEstudianteById(id: number): Promise<EstudianteEntity> {
+  async findEstudianteById(id: string): Promise<EstudianteEntity> {
     const estudiante: EstudianteEntity | null =
       await this.estudianteRepository.findOne({
         where: { id },
@@ -57,12 +57,13 @@ export class EstudianteService {
   }
 
   async InscribirseActividad(
-    estudianteId: number,
-    actividadId: number,
+    estudianteId: string,
+    actividadId: string,
   ): Promise<EstudianteEntity> {
     const estudiante: EstudianteEntity | null =
       await this.estudianteRepository.findOne({
         where: { id: estudianteId },
+        relations: ['actividades'], // Add this line to load the activities
       });
 
     if (!estudiante)
@@ -83,7 +84,11 @@ export class EstudianteService {
         BusinessError.NOT_FOUND,
       );
 
+    estudiante.actividades = estudiante.actividades || [];
+    actividad.estudiantes = actividad.estudiantes || [];
+
     estudiante.actividades = [...estudiante.actividades, actividad];
+    actividad.estudiantes = [...actividad.estudiantes, estudiante];
     return await this.estudianteRepository.save(estudiante);
   }
 }

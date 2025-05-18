@@ -1,5 +1,3 @@
-import { EstudianteEntity } from 'src/estudiante/estudiante.entity';
-import { ReseniaEntity } from 'src/resenia/resenia.entity';
 import {
   Column,
   Entity,
@@ -8,11 +6,13 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { EstudianteEntity } from '../estudiante/estudiante.entity';
+import { ReseniaEntity } from '../resenia/resenia.entity';
 
 @Entity()
 export class ActividadEntity {
-  @PrimaryGeneratedColumn({ type: 'bigint' })
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   titulo: string;

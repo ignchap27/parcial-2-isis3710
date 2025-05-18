@@ -1,18 +1,18 @@
-import { ActividadEntity } from 'src/actividad/actividad.entity';
-import { ReseniaEntity } from 'src/resenia/resenia.entity';
 import {
   Column,
   Entity,
-  JoinTable,
   ManyToMany,
   OneToMany,
+  JoinTable,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ActividadEntity } from '../actividad/actividad.entity';
+import { ReseniaEntity } from '../resenia/resenia.entity';
 
 @Entity()
 export class EstudianteEntity {
-  @PrimaryGeneratedColumn({ type: 'bigint' })
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   nombre: string;

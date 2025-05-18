@@ -27,20 +27,20 @@ export class ReseniaController {
 
   @Post('actividad/:actividadId/estudiante/:estudianteId')
   async agregarResenia(
-    @Param('actividadId') actividadId: number,
-    @Param('estudianteId') estudianteId: number,
+    @Param('actividadId') actividadId: string,
+    @Param('estudianteId') estudianteId: string,
     @Body() reseniaDto: ReseniaDto,
   ) {
     const resenia: ReseniaEntity = plainToInstance(ReseniaEntity, reseniaDto);
     return await this.reseniaService.agregarResenia(
-      +actividadId,
-      +estudianteId,
+      actividadId,
+      estudianteId,
       resenia,
     );
   }
 
   @Get(':reseniaId')
-  async findReseniaById(@Param('reseniaId') reseniaId: number) {
-    return await this.reseniaService.findReseniaById(+reseniaId);
+  async findReseniaById(@Param('reseniaId') reseniaId: string) {
+    return await this.reseniaService.findReseniaById(reseniaId);
   }
 }

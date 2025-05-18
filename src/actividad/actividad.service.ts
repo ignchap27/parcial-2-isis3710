@@ -5,7 +5,7 @@ import { ActividadEntity } from './actividad.entity';
 import {
   BusinessError,
   BusinessLogicException,
-} from 'src/shared/errors/business-errors';
+} from '../shared/errors/business-errors';
 
 @Injectable()
 export class ActividadService {
@@ -28,7 +28,7 @@ export class ActividadService {
   }
 
   async cambiarEstado(
-    actividadId: number,
+    actividadId: string,
     estado: number,
   ): Promise<ActividadEntity> {
     if (![0, 1, 2].includes(estado)) {

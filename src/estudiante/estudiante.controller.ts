@@ -20,8 +20,8 @@ export class EstudianteController {
   constructor(private readonly estudianteService: EstudianteService) {}
 
   @Get(':estudianteId')
-  async findEstudianteById(@Param('estudianteId') estudianteId: number) {
-    return await this.estudianteService.findEstudianteById(+estudianteId);
+  async findEstudianteById(@Param('estudianteId') estudianteId: string) {
+    return await this.estudianteService.findEstudianteById(estudianteId);
   }
 
   @Post()
@@ -35,12 +35,12 @@ export class EstudianteController {
 
   @Post(':estudianteId/actividad/:actividadId')
   async inscribirseActividad(
-    @Param('estudianteId') estudianteId: number,
-    @Param('actividadId') actividadId: number,
+    @Param('estudianteId') estudianteId: string,
+    @Param('actividadId') actividadId: string,
   ) {
     return await this.estudianteService.InscribirseActividad(
-      +estudianteId,
-      +actividadId,
+      estudianteId,
+      actividadId,
     );
   }
 }
