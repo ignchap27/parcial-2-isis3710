@@ -107,7 +107,6 @@ describe('ActividadService', () => {
 
   // Tests for cambiarEstado
   it('cambiarEstado should change activity state to closed (1) when 80% full', async () => {
-    // Add 8 students (80% of cupoMaximo)
     actividad.estudiantes = estudiantesList;
     await actividadRepository.save(actividad);
 
@@ -117,7 +116,6 @@ describe('ActividadService', () => {
   });
 
   it('cambiarEstado should change activity state to finished (2) when 100% full', async () => {
-    // Create 2 more students to make it 100% full (10 total)
     const extraEstudiantes: EstudianteEntity[] = [];
     for (let i = 0; i < 2; i++) {
       const estudiante: EstudianteEntity = await estudianteRepository.save({
@@ -140,7 +138,6 @@ describe('ActividadService', () => {
   });
 
   it('cambiarEstado should throw an exception for closing activity with less than 80% full', async () => {
-    // Only add 7 students (70% of cupoMaximo)
     actividad.estudiantes = estudiantesList.slice(0, 7);
     await actividadRepository.save(actividad);
 
@@ -153,7 +150,6 @@ describe('ActividadService', () => {
   });
 
   it('cambiarEstado should throw an exception for finishing activity with less than 100% full', async () => {
-    // Add 8 students (80% of cupoMaximo)
     actividad.estudiantes = estudiantesList;
     await actividadRepository.save(actividad);
 

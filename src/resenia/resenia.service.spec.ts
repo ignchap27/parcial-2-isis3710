@@ -189,7 +189,6 @@ describe('ReseniaService', () => {
   });
 
   it('agregarResenia should throw an exception for student not enrolled in activity', async () => {
-    // Create a new student who isn't enrolled in the activity
     const unenrolledEstudiante = await estudianteRepository.save({
       nombre: faker.person.fullName(),
       correo: faker.internet.email(),
@@ -203,7 +202,7 @@ describe('ReseniaService', () => {
       id: '',
       calificacion: faker.number.int({ min: 1, max: 5 }),
       fecha: faker.date.recent().toISOString().split('T')[0],
-      estudiante: unenrolledEstudiante, // Use the non-enrolled student here
+      estudiante: unenrolledEstudiante,
       actividad: actividad,
     };
 

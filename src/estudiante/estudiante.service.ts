@@ -63,7 +63,7 @@ export class EstudianteService {
     const estudiante: EstudianteEntity | null =
       await this.estudianteRepository.findOne({
         where: { id: estudianteId },
-        relations: ['actividades'], // Add this line to load the activities
+        relations: ['actividades'],
       });
 
     if (!estudiante)
