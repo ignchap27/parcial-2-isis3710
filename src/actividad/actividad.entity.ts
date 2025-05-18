@@ -11,8 +11,8 @@ import {
 
 @Entity()
 export class ActividadEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: number;
 
   @Column()
   titulo: string;

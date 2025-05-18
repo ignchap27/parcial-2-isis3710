@@ -27,8 +27,8 @@ export class ReseniaService {
   }
 
   async agregarResenia(
-    actividadId: string,
-    estudianteId: string,
+    actividadId: number,
+    estudianteId: number,
     resenia: ReseniaEntity,
   ): Promise<ReseniaEntity> {
     const actividad = await this.actividadRepository.findOne({
@@ -78,7 +78,7 @@ export class ReseniaService {
     return await this.reseniaRepository.save(resenia);
   }
 
-  async findReseniaById(id: string): Promise<ReseniaEntity> {
+  async findReseniaById(id: number): Promise<ReseniaEntity> {
     const resenia = await this.reseniaRepository.findOne({
       where: { id },
       relations: ['actividad', 'estudiante'],

@@ -28,7 +28,7 @@ export class ActividadService {
   }
 
   async cambiarEstado(
-    actividadId: string,
+    actividadId: number,
     estado: number,
   ): Promise<ActividadEntity> {
     if (![0, 1, 2].includes(estado)) {

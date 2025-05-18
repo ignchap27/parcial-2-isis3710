@@ -17,7 +17,7 @@ import { ReseniaEntity } from './resenia/resenia.entity';
       port: 5434,
       username: 'postgres',
       password: 'postgres',
-      database: 'urbanshield',
+      database: 'parcial2',
       entities: [EstudianteEntity, ActividadEntity, ReseniaEntity],
       dropSchema: true,
       synchronize: true,

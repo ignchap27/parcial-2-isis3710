@@ -11,8 +11,8 @@ import {
 
 @Entity()
 export class EstudianteEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: number;
 
   @Column()
   nombre: string;

@@ -18,7 +18,7 @@ export class EstudianteService {
     private readonly actividadRepository: Repository<ActividadEntity>,
   ) {}
 
-  async findEstudianteById(id: string): Promise<EstudianteEntity> {
+  async findEstudianteById(id: number): Promise<EstudianteEntity> {
     const estudiante: EstudianteEntity | null =
       await this.estudianteRepository.findOne({
         where: { id },
@@ -57,8 +57,8 @@ export class EstudianteService {
   }
 
   async InscribirseActividad(
-    estudianteId: string,
-    actividadId: string,
+    estudianteId: number,
+    actividadId: number,
   ): Promise<EstudianteEntity> {
     const estudiante: EstudianteEntity | null =
       await this.estudianteRepository.findOne({

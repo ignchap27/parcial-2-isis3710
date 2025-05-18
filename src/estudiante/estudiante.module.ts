@@ -4,6 +4,7 @@ import { EstudianteEntity } from './estudiante.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ActividadEntity } from 'src/actividad/actividad.entity';
 import { ReseniaEntity } from 'src/resenia/resenia.entity';
+import { EstudianteController } from './estudiante.controller';
 
 @Module({
   providers: [EstudianteService],
@@ -14,5 +15,6 @@ import { ReseniaEntity } from 'src/resenia/resenia.entity';
       ReseniaEntity,
     ]),
   ],
+  controllers: [EstudianteController],
 })
 export class EstudianteModule {}
