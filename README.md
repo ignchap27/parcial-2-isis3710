@@ -1,98 +1,248 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Documentación de la API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Estudiantes
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Obtener Estudiante por ID
+- **Método:** `GET`
+- **Ruta:** `/estudiante/:estudianteId`
+- **Descripción:** Recupera los datos de un estudiante por su ID, incluyendo sus actividades y reseñas asociadas.
 
-## Project setup
+- **Parámetros de Ruta:**
+  - `estudianteId`: UUID del estudiante a consultar
 
-```bash
-$ npm install
-```
+- **Respuesta Exitosa:** Objeto **estudiante** con sus relaciones
 
-## Compile and run the project
+- **Posibles Errores:**
+  - `404 Not Found`: El estudiante con el ID proporcionado no existe
 
-```bash
-# development
-$ npm run start
+---
 
-# watch mode
-$ npm run start:dev
+### Crear Estudiante
+- **Método:** `POST`
+- **Ruta:** `/estudiante`
+- **Descripción:** Crea un nuevo estudiante en el sistema.
+- **Cuerpo de la Solicitud:**
+  ```json
+  {
+    "nombre": "Juan Pérez",
+    "correo": "juan.perez@ejemplo.com",
+    "programa": "Ingeniería de Sistemas",
+    "semestre": 6
+  }
 
-# production mode
-$ npm run start:prod
-```
 
-## Run tests
+* **Validaciones:**
 
-```bash
-# unit tests
-$ npm run test
+  * El correo debe tener un formato válido
+  * El semestre debe estar entre **1** y **10**
 
-# e2e tests
-$ npm run test:e2e
+* **Respuesta Exitosa:** Objeto **estudiante** creado
 
-# test coverage
-$ npm run test:cov
-```
+---
 
-## Deployment
+### Inscribir Estudiante en Actividad
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+* **Método:** `POST`
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+* **Ruta:** `/estudiante/:estudianteId/actividad/:actividadId`
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+* **Descripción:** Inscribe a un estudiante existente en una actividad.
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+* **Parámetros de Ruta:**
 
-## Resources
+  * `estudianteId`: UUID del estudiante
+  * `actividadId`: UUID de la actividad
 
-Check out a few resources that may come in handy when working with NestJS:
+* **Respuesta Exitosa:** Objeto **estudiante** actualizado con la nueva actividad
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+* **Posibles Errores:**
 
-## Support
+  * `404 Not Found`: El estudiante o la actividad no existen
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## Actividades
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Crear Actividad
 
-## License
+* **Método:** `POST`
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+* **Ruta:** `/actividad`
+
+* **Descripción:** Crea una nueva actividad en el sistema.
+
+* **Cuerpo de la Solicitud:**
+
+  ```json
+  {
+    "titulo": "Taller de programación funcional con JavaScript",
+    "fecha": "2023-10-20",
+    "cupoMaximo": 20,
+    "estado": 0
+  }
+  ```
+
+* **Validaciones:**
+
+  * El título debe tener al menos **15** caracteres
+  * El estado siempre se establece en **0** (abierta) inicialmente
+
+* **Respuesta Exitosa:** Objeto **actividad** creada
+
+---
+
+### Cambiar Estado de Actividad
+
+* **Método:** `POST`
+
+* **Ruta:** `/actividad/:actividadId/estado/:estado`
+
+* **Descripción:** Cambia el estado de una actividad existente.
+
+* **Parámetros de Ruta:**
+
+  * `actividadId`: UUID de la actividad
+  * `estado`: Nuevo estado (`0` = abierta, `1` = cerrada, `2` = finalizada)
+
+* **Validaciones:**
+
+  * Para estado **1** (cerrada): se requiere al menos **80 %** de ocupación
+  * Para estado **2** (finalizada): se requiere **100 %** de ocupación (cupo lleno)
+
+* **Respuesta Exitosa:** Objeto **actividad** actualizada
+
+* **Posibles Errores:**
+
+  * `404 Not Found`: La actividad no existe
+  * `412 Precondition Failed`: No se cumple el porcentaje de ocupación requerido
+
+---
+
+### Obtener Actividades por Fecha
+
+* **Método:** `GET`
+
+* **Ruta:** `/actividad/fecha/:fecha`
+
+* **Descripción:** Obtiene todas las actividades programadas para una fecha específica.
+
+* **Parámetros de Ruta:**
+
+  * `fecha`: Fecha en formato `YYYY-MM-DD`
+
+* **Respuesta Exitosa:** Array de objetos **actividad** con sus relaciones
+
+---
+
+## Reseñas
+
+### Crear Reseña
+
+* **Método:** `POST`
+
+* **Ruta:** `/resenia`
+
+* **Descripción:** Crea una nueva reseña sin asociarla a ningún estudiante o actividad.
+
+* **Cuerpo de la Solicitud:**
+
+  ```json
+  {
+    "comentario": "Excelente actividad, aprendí mucho",
+    "calificacion": 4
+  }
+  ```
+
+* **Respuesta Exitosa:** Objeto **reseña** creada
+
+---
+
+### Agregar Reseña a Actividad
+
+* **Método:** `POST`
+
+* **Ruta:** `/resenia/actividad/:actividadId/estudiante/:estudianteId`
+
+* **Descripción:** Agrega una reseña a una actividad por parte de un estudiante.
+
+* **Parámetros de Ruta:**
+
+  * `actividadId`: UUID de la actividad
+  * `estudianteId`: UUID del estudiante
+
+* **Cuerpo de la Solicitud:**
+
+  ```json
+  {
+    "comentario": "¡Muy buen taller!",
+    "calificacion": 5
+  }
+  ```
+
+* **Validaciones:**
+
+  * La actividad debe existir
+  * La actividad debe estar **finalizada** (`estado = 2`)
+  * El estudiante debe existir
+  * El estudiante debe estar inscrito en la actividad
+
+* **Respuesta Exitosa:** Objeto **reseña** creada con relaciones
+
+* **Posibles Errores:**
+
+  * `404 Not Found`: La actividad o el estudiante no existen
+  * `412 Precondition Failed`: La actividad no está finalizada o el estudiante no está inscrito
+
+---
+
+### Obtener Reseña por ID
+
+* **Método:** `GET`
+
+* **Ruta:** `/resenia/:reseniaId`
+
+* **Descripción:** Recupera una reseña por su ID, incluyendo la actividad y el estudiante relacionados.
+
+* **Parámetros de Ruta:**
+
+  * `reseniaId`: UUID de la reseña
+
+* **Respuesta Exitosa:** Objeto **reseña** con sus relaciones
+
+* **Posibles Errores:**
+
+  * `404 Not Found`: La reseña con el ID proporcionado no existe
+
+## Pruebas Realizadas en Postman
+
+Se realizaron pruebas a todas las peticiones en postman, esto para verificar su funcionamiento y la importancia de estas para la aplicación. Para estas pruebas, las variables utilizadas fueron los IDs autogenerados por la base de datos de Postgres. Si se quieren replicar las pruebas, se deberán modificar manualmente cada ID en los parámetros de la petición para obtener los resultados deseados.
+
+**Get Estudiante por ID**
+![alt text](image.png)
+
+**Crear Estudiante**
+![alt text](image-1.png)
+
+**Añadir Estudiante a Actividad**
+![alt text](image-2.png)
+
+**Crear Actividad**
+![alt text](image-3.png)
+
+**Cambiar Estado de Actividad**
+![alt text](image-4.png)
+
+**Get Actividades por Fecha**
+![alt text](image-5.png)
+
+**Crear Reseña**
+![alt text](image-6.png)
+
+**Añadir Reseña a Actividad**
+![alt text](image-7.png)
+
+**Get Reseña por ID**
+![alt text](image-8.png)
